@@ -1,0 +1,25 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "stdlib.h": "c",
+        "enemy.h": "c",
+        "sdle_colision.h": "c",
+        "sdl_extras.h": "c",
+        "ncurses.h": "c",
+        "stdio.h": "c",
+        "sdl.h": "c",
+        "algorithm": "c",
+        "sdle_text.h": "c",
+        "*.tcc": "c",
+        "cmath": "c",
+        "sdl_image.h": "c",
+        "sdl_ttf.h": "c",
+        "begin_code.h": "c",
+        "close_code.h": "c",
+        "stdbool.h": "c",
+        "windows.h": "c",
+        "commdlg.h": "c",
+        "_mingw.h": "c"
+    },
+    "workbench.editor.enablePreviewFromCodeNavigation": false
+}

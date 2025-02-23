@@ -1,0 +1,19 @@
+syntax to compile SDL projects
+
+one file:
+g++ src/main.c -o bin/prog -I include -L lib -lmingw32 -lSDL2main -lSDL2
+
+more than 1 file:
+g++ src/*.c -o bin/prog -I include -L lib -lmingw32 -lSDL2main -lSDL2 
+
+add:
+SDL_ttf: 
+-lSDL2_ttf
+
+SDL_image:
+-lSDL2_image
+
+SDL_mixer:
+-lSDL2_mixer
+
+same for all other sdl extensions...
