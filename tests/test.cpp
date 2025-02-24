@@ -88,7 +88,7 @@ int main(int argc, char** argv)
                 break;
             }
             txt_zne.add_typed_chars(event);
-            bar.modify(event);
+            bar.Update(event);
             // SDL_E::buttons_clicked(event,buttons);
         }
         if(last_val != bar.get_value().f_value)

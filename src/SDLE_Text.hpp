@@ -129,14 +129,14 @@ namespace SDL_E
 
             /**
              * you can add flag wich are:
-             * - `BUTTON_ISCLICK_COLOR` when button is click the bg change color
+             * - `TEXT_SOLID` or `TEXT_LCD`
              * \param flag one flag or more OR together (ex: FLAG1 | FLAG2)
              */
             void add_flag(int flag);
 
             /**
              * you can remove flag wich are:
-             * - `BUTTON_ISCLICK_COLOR` when button is click the bg change color
+             * - `TEXT_SOLID` or `TEXT_LCD`
              * \param flag one flag or more OR together (ex: FLAG1 | FLAG2)
              */
             void remove_flag(int flag);
@@ -169,7 +169,7 @@ namespace SDL_E
             void Draw();
         private:
             SDL_Rect zone_rect = {0,0,0,0};
-            std::string::iterator cursor = message.begin();
+            // std::string::iterator cursor = message.begin(); // not used for the moment
     };
 }
 

@@ -106,7 +106,7 @@ SDL_E::flin_value SDL_E::ScrollBar::get_value()
     return this->value;
 }
 
-void SDL_E::ScrollBar::modify(SDL_Event event)
+void SDL_E::ScrollBar::Update(SDL_Event event)
 {
     if(event.type == SDL_MOUSEBUTTONDOWN)
     {
