@@ -96,7 +96,7 @@ the result:
 on top: solid rendering
 on bottom: LCD rendering
 
-## Text Zone
+### Text Zone
 a class that inherit from Text class that is define with a rectangle: the zone that the user can fill with text
 important methods:
 - `Draw()` render the text (not render the zone rectangle)
