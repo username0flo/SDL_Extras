@@ -1,0 +1,5 @@
+tests/tst.cpp
+documentation.md
+.vscode
+bin/*.o
+src/ASCII-Table.png

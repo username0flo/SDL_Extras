@@ -105,6 +105,7 @@ void SDL_E::Text::set_pos(int x, int y)
 void SDL_E::Text::set_color(SDL_Color color)
 {
     this->text_color = color;
+    this->_LoadTexture();
 }
 
 void SDL_E::Text::set_color(int r, int g, int b, int a)
@@ -113,11 +114,13 @@ void SDL_E::Text::set_color(int r, int g, int b, int a)
     this->text_color.g = g;
     this->text_color.b = b;
     this->text_color.a = a;
+    this->_LoadTexture();
 }
 
 void SDL_E::Text::set_bg_color(SDL_Color color)
 {
     this->bg_color = color;
+    this->_LoadTexture();
 }
 
 void SDL_E::Text::set_bg_color(int r, int g, int b, int a)
@@ -126,6 +129,7 @@ void SDL_E::Text::set_bg_color(int r, int g, int b, int a)
     this->bg_color.g = g;
     this->bg_color.b = b;
     this->bg_color.a = a;
+    this->_LoadTexture();
 }
 
 void SDL_E::Text::change_font(TTF_Font* new_font)
@@ -149,11 +153,13 @@ void SDL_E::Text::set_message(std::string message)
 void SDL_E::Text::add_flag(int flag)
 {
     this->flags |= flag;
+    this->_LoadTexture();
 }
 
 void SDL_E::Text::remove_flag(int flag)
 {
     this->flags &= ~flag;
+    this->_LoadTexture();
 }
 
 TTF_Font* SDL_E::Text::Get_Font()

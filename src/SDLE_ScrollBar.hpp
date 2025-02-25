@@ -148,7 +148,7 @@ namespace SDL_E
             int start = 0;
             int step = 1;
             int nb_vals;
-            double circle_ratio = 4/3;
+            double circle_ratio = 4.0/3.0;
             int mode = SCROLL_INT_MODE;
             SDL_Rect bar = {10,10,100,5};
             flin_value value;
