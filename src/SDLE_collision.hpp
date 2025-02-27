@@ -104,7 +104,7 @@ namespace SDL_E
      * \param center2 a point witch is the center of the second circle
      * \param radius2 the radius of the second circle
      */
-    bool point_circle_collision(SDL_Point center1, int radius1, SDL_Point center2, int radius2);
+    bool circle_collision(SDL_Point center1, int radius1, SDL_Point center2, int radius2);
 }
 
 

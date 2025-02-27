@@ -136,6 +136,20 @@ namespace SDL_E
              * \warning this methos return an union of float and int with repectively i_value and f_value field
              */
             flin_value get_value();
+
+            SDL_Rect get_rect();
+
+            int get_start();
+
+            int get_step();
+
+            int get_end();
+
+            int get_circle_x();
+
+            int get_circle_y();
+
+            int get_circle_radius();
             
             /**
              * this method update the state of the scroll bar
@@ -150,10 +164,12 @@ namespace SDL_E
             int nb_vals;
             double circle_ratio = 4.0/3.0;
             int mode = SCROLL_INT_MODE;
+            bool is_hold = false;
             SDL_Rect bar = {10,10,100,5};
             flin_value value;
 
     };
 }
 
+SDL_E::flin_value _update_value(SDL_E::ScrollBar& srllbar, int mousex);
 #endif

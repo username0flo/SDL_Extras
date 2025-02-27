@@ -92,7 +92,7 @@ bool SDL_E::point_circle_collision(int px, int py, SDL_Point center, int radius)
     return distance(px,py,center.x, center.y) <= radius;
 }
 
-bool SDL_E::point_circle_collision(SDL_Point center1, int radius1, SDL_Point center2, int radius2)
+bool SDL_E::circle_collision(SDL_Point center1, int radius1, SDL_Point center2, int radius2)
 {
     return distance(center1, center2) <= radius1 + radius2;
 }

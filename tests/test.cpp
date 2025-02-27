@@ -63,16 +63,17 @@ int main(int argc, char** argv)
 
     SDL_E::ScrollBar bar{};
     bar.change_mode(SCROLL_FLOAT_MODE);
-    bar.set_pos(200,50);
-    bar.set_size(300,20);
-    bar.set_value((float)3.14);
+    bar.set_pos(150,50);
+    bar.set_size(400,20);
+    bar.set_value((float)100.0);
     bar.set_start(0);
-    bar.set_end(10);
-
+    bar.set_end(100);
     float last_val = bar.get_value().f_value;
     SDL_E::Text txt_val{font,renderer,std::to_string(last_val)};
     txt_val.set_pos(200,10);
     std::cout << "mode : " << bar.get_mode() << std::endl;
+
+    SDL_Rect rct = {200,80,200,200};
     
 
 
@@ -95,6 +96,8 @@ int main(int argc, char** argv)
         {
             last_val = bar.get_value().f_value;
             txt_val.set_message(std::to_string(last_val));
+            rct.w = 200 * (bar.get_value().f_value / 100.0);
+            rct.h = 200 * (bar.get_value().f_value / 100.0);
 
         }
         // for(int i = 0;i < 4; i++)
@@ -110,7 +113,8 @@ int main(int argc, char** argv)
         // SDL_SetRenderDrawColor(renderer,0,100,255,255);
         // SDL_E::RenderFillShape(renderer,shape);
         // SDL_E::draw_buttons(buttons);
-        
+        SDL_SetRenderDrawColor(renderer,0,200,140,255);
+        SDL_RenderFillRect(renderer,&rct);
         txt_zne.Draw();
         txt_val.Draw();
         bar.Draw(renderer);

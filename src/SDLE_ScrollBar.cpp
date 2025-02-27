@@ -68,20 +68,11 @@ void SDL_E::ScrollBar::Draw(SDL_Renderer* renderer)
     SDL_RenderDrawRect(renderer,&(this->bar));
 
     SDL_SetRenderDrawColor(renderer,255,255,255,SDL_ALPHA_OPAQUE);
-    float val;
-    if((mode & 1) == SCROLL_FLOAT_MODE)
-    {
-        val = (this->value.f_value - this->start) * this->bar.w / this->nb_vals;
-    }
-    else
-    {
-        int step_size = (int)(this->bar.w / this->nb_vals);
-        val  = (float)(this->value.i_value - this->start)* step_size/this->step;
-    }
+
     SDL_E::RenderFillCircle(renderer,
-                        this->bar.x + val,
-                        this->bar.y + (int)(this->bar.h / 2),
-                        (int)((float)(this->bar.h) * (this->circle_ratio /2)));
+                        this->get_circle_x(),
+                        this->get_circle_y(),
+                        this->get_circle_radius());
 
 }
 
@@ -108,23 +99,93 @@ SDL_E::flin_value SDL_E::ScrollBar::get_value()
 
 void SDL_E::ScrollBar::Update(SDL_Event event)
 {
+    if(event.type == SDL_MOUSEBUTTONUP)
+        this->is_hold = false;
+    
+    if(event.type == SDL_MOUSEMOTION && this->is_hold)
+    {
+        int mousex = std::clamp(event.button.x, this->bar.x, this->bar.x + this->bar.w);
+        this->value = _update_value(*this,mousex);
+    }
     if(event.type == SDL_MOUSEBUTTONDOWN)
     {
         int mousex = event.button.x;
         int mousey = event.button.y;
+        SDL_Point pt = {this->get_circle_x(), this->get_circle_y()};
+        if(point_circle_collision(mousex, mousey, pt, this->get_circle_radius()))
+        {
+            mousex = std::clamp(event.button.x, this->bar.x, this->bar.x + this->bar.w);
+            this->is_hold = true;
+            this->value = _update_value(*this,mousex);
+        }
         if(point_rect_collision(mousex,mousey,this->bar))
         {
-            if((this->mode & 1) == SCROLL_INT_MODE)
-            {
-                double step_size = this->bar.w / this->nb_vals;
-                int relative_pos = mousex - this->bar.x;
-                int index = (int)SDL_round(relative_pos / step_size);
-                this->value.i_value = index + start;
-            }
-            else
-            {
-                this->value.f_value = (float)(mousex - this->bar.x) * ((float)this->nb_vals / (float)this->bar.w);
-            }
+            this->value = _update_value(*this,mousex);
         }
     }
+}
+
+SDL_E::flin_value _update_value(SDL_E::ScrollBar& srllbar, int mousex)
+{
+    SDL_E::flin_value value;
+    SDL_Rect bar = srllbar.get_rect();
+    int end = srllbar.get_end();
+    if((srllbar.get_mode() & 1) == SCROLL_INT_MODE)
+    {
+        double step_size = bar.w / end;
+        int relative_pos = mousex - bar.x;
+        int index = (int)SDL_round(relative_pos / step_size);
+        value.i_value = index + srllbar.get_start();
+    }
+    else
+    {
+        value.f_value = (float)(mousex - bar.x) * ((float)end / (float)bar.w);
+    }
+    return value;
+
+}
+
+int SDL_E::ScrollBar::get_circle_x()
+{
+    double val;
+    if((mode & 1) == SCROLL_FLOAT_MODE)
+    {
+        val = (this->value.f_value - this->start) * this->bar.w / this->nb_vals;
+    }
+    else
+    {
+        int step_size = (int)(this->bar.w / this->nb_vals);
+        val  = (float)(this->value.i_value - this->start)* step_size/this->step;
+    }
+    return this->bar.x + val;
+}
+
+int SDL_E::ScrollBar::get_circle_y()
+{
+    return this->bar.y + (this->bar.h /2);
+}
+
+int SDL_E::ScrollBar::get_circle_radius()
+{
+    return (int)((float)(this->bar.h) * (this->circle_ratio /2));
+}
+
+SDL_Rect SDL_E::ScrollBar::get_rect()
+{
+    return this->bar;
+}
+
+int SDL_E::ScrollBar::get_start()
+{
+    return this->start;
+}
+
+int SDL_E::ScrollBar::get_step()
+{
+    return this->step;
+}
+
+int SDL_E::ScrollBar::get_end()
+{
+    return this->nb_vals;
 }
