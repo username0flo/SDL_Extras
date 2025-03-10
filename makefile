@@ -5,7 +5,7 @@ ERRFLAGS = -Wall -Wextra
 
 test : bin\test.exe
 
-bin\test.exe : bin\SDL_Extras.o bin\SDLE_Button.o bin\SDLE_collision.o bin\SDLE_drawing.o bin\SDLE_ScrollBar.o bin\SDLE_Text.o bin\SDLE_vector.o bin\test.o
+bin\test.exe : bin\SDL_Extras.o bin\SDLE_Button.o bin\SDLE_collision.o bin\SDLE_drawing.o bin\SDLE_ScrollBar.o bin\SDLE_ProgressBar.o bin\SDLE_Text.o bin\SDLE_vector.o bin\test.o
 	$(CC) $(ERRFLAGS) -o $@ $^ $(CFLAGS)
 
 bin\test.o :  tests\test.cpp
@@ -24,6 +24,9 @@ bin\SDLE_drawing.o : src\SDLE_drawing.cpp
 	$(CC) $(ERRFLAGS) -o $@ -c $< $(CFLAGS)
 
 bin\SDLE_ScrollBar.o : src\SDLE_ScrollBar.cpp
+	$(CC) $(ERRFLAGS) -o $@ -c $< $(CFLAGS)
+
+bin\SDLE_ProgressBar.o : src\SDLE_ProgressBar.cpp
 	$(CC) $(ERRFLAGS) -o $@ -c $< $(CFLAGS)
 
 bin\SDLE_Text.o : src\SDLE_Text.cpp
