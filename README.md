@@ -36,6 +36,7 @@ table of contents:
 - [Text Zone](#text-zone)
 - [Button](#button)
 - [Scroll Bar](#scroll-bar)
+- [Progress Bar](#progress-bar)
 - [Shapes](#shapes)
 - [collisions](#collisions)
 - [drawings](#drawings)
@@ -109,8 +110,8 @@ important methods:
 > non ascii chars are not added to the text zone 
 
 ### Button
-a button class formed with a text and a rectangle.
-there is also a padding values (wich is the space between text and rectangle)
+a button class inherited frow `Text` with
+a rectangle and a padding values (wich is the space between text and rectangle)
 
 the button is like a Text class with padding and rectangle attributes.
 
@@ -125,7 +126,8 @@ there are also methods ta manipulate a std::vector of button:
 ### Scroll Bar
 
 a scroll bar is a class (like this (v))
-![exaple scroll bar](ex_img/ex_scroll_bar.png)
+
+![example scroll bar](ex_img/ex_scroll_bar.png)
 
 there is two mods of scroll bars:
 
@@ -148,6 +150,21 @@ there also 2 importants methods witch are:
 
 > [!NOTE]
 > with int mode when you click in the scroll bar it is set to the nearest value
+
+### Progress Bar
+
+a progress bar is a bar like in loading text boxes (like this (v))
+
+![example scroll bar](ex_img/ex_progress_bar.png)
+
+it is aproxymately the same thing as the [ScrollBar](#scroll-bar).
+it is defined with:
+    - a start value, (an int) witch is like a minimum value
+    - a end value, (an int) witch is like a maximum value
+    - a value, (a float) witch is between the start and the end
+
+you can change the position, the size, the values and the colors of the bar
+you can also draw the progress bar with the method `Draw(renderer)`
 
 ### Shapes
 

@@ -162,6 +162,10 @@ namespace SDL_E
         using Text::Text;
 
         public:
+            TextZone();
+            TextZone(TTF_Font* font, SDL_Renderer* renderer, std::string message);
+            TextZone(TTF_Font* font, SDL_Renderer* renderer , std::string message, int x, int y);
+            ~TextZone();
             void change_zone_size(int w, int h);
             void change_zone_pos(int x, int y);
             void add_typed_chars(SDL_Event event);
@@ -169,7 +173,7 @@ namespace SDL_E
             void Draw();
         private:
             SDL_Rect zone_rect = {0,0,0,0};
-            // std::string::iterator cursor = message.begin(); // not used for the moment
+            std::string::iterator cursor;
     };
 }
 

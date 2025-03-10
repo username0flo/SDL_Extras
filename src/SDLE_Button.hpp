@@ -6,28 +6,23 @@
 #include "SDLE_Text.hpp"
 #include <vector>
 
-#define BUTTON_ISCLICK_COLOR 0x00000001
+#define BUTTON_ISCLICK_COLOR 0x00000000
+#define BUTTON_ISCLICK_NO_COLOR 0x00000002
 
 
 namespace SDL_E
 {
-    class Button
+    class Button : public Text
     {
         public:
+            using Text::Text;
             Button() = default;
             Button(const Button& button);
-            Button(Text text);
-            Button(TTF_Font* font, SDL_Renderer* renderer, std::string message);
             Button(TTF_Font* font, SDL_Renderer* renderer, std::string message, int x, int y);
             Button(Text text, int x, int y);
             ~Button();
 
             void operator=(const Button& other);
-
-            /**
-             * \return the string that text show
-             */
-            std::string Get_message();
 
             /**
              * \return the color of the text
@@ -45,11 +40,6 @@ namespace SDL_E
              */            
             SDL_Rect Get_rect();
 
-            /**
-             * to know if a flag is in the flags int you just have to check the condition: (flags | YOUR_FLAG)
-             * \return the actual int where all the flag are stored
-             */
-            int Get_flags();
 
             /**
              * \return a SDL_Point with x = padx and y = pady
@@ -85,6 +75,10 @@ namespace SDL_E
              */
             void set_txt_color(int r, int g, int b, int a);
 
+            void set_txt_bg_color(SDL_Color color);
+
+            void set_txt_bg_color(int r, int g, int b, int a);
+
             /**
              * change the background color
              * \param color new background color
@@ -101,25 +95,13 @@ namespace SDL_E
             void set_bg_color(int r, int g, int b, int a);
 
             /**
-             * change the font used to render the text
-             * /!\ the button class just use the font but you have to open and free it outside of the class
-             * \param new_font the new font used to render the text
-             */
-            void change_font(TTF_Font* new_font);
-
-            /**
-             * change the message of the text
-             * \param message the new message
-             */
-            void set_message(std::string message);
-
-            /**
              * draw the button in a renderer(added during call of contructor)
              */
             void Draw();
 
             /**
              * you can add flag wich are:
+             * - `TEXT_SOLID` or `TEXT_LCD`
              * - `BUTTON_ISCLICK_COLOR` when button is click the bg change color
              * \param flag one flag or more OR together (ex: FLAG1 | FLAG2)
              */
@@ -127,6 +109,7 @@ namespace SDL_E
 
             /**
              * you can remove flag wich are:
+             * - `TEXT_SOLID` or `TEXT_LCD`
              * - `BUTTON_ISCLICK_COLOR` when button is click the bg change color
              * \param flag one flag or more OR together (ex: FLAG1 | FLAG2)
              */
@@ -153,14 +136,12 @@ namespace SDL_E
 
             void _UpdateRect();
         private:
-            Text text;
             SDL_Rect rect = {0,0,0,0};
             SDL_Color bg_color = {255,0,0,255};
             int padx = 5;
             int pady = 5;
             bool is_click = false;
             // bool is_just_click = false; // can't use (same as click)
-            int flag = BUTTON_ISCLICK_COLOR;
     };
     /**
      * a simple event gestionnary that check if buttons are clicked

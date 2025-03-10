@@ -184,6 +184,39 @@ void SDL_E::Text::operator=(const Text& other)
 // TEXT ZONE
 /*----------------------------------------------------------------------------------------*/
 
+SDL_E::TextZone::TextZone()
+{
+    this->message = "|";
+    this->cursor = this->message.begin();
+    this->_LoadTexture();
+}
+
+SDL_E::TextZone::TextZone(TTF_Font* font, SDL_Renderer* renderer, std::string message)
+{
+    this->font = font;
+    this->renderer = renderer;
+    this->message = message + '|';
+    this->cursor = this->message.end();
+    std::cerr << "cursor : " << *(this->cursor) << " cursor -1: "<< *(this->cursor -1) << "\n";
+    this->_LoadTexture();
+}
+
+SDL_E::TextZone::TextZone(TTF_Font* font, SDL_Renderer* renderer , std::string message, int x, int y)
+{
+    this->font = font;
+    this->renderer = renderer;
+    this->message = message + '|';
+    this->cursor = this->message.end();
+    this->zone_rect.x = x;
+    this->zone_rect.y = y;
+    this->_LoadTexture();
+}
+
+SDL_E::TextZone::~TextZone()
+{
+    this->Text::~Text();
+}
+
 void SDL_E::TextZone::change_zone_size(int w, int h)
 {
     this->zone_rect.w = w;
@@ -238,10 +271,19 @@ void SDL_E::TextZone::add_typed_chars(SDL_Event event)
             if(this->message.size() >= 1)
                 this->message.pop_back();
         }
-        // else if(event.key.keysym.sym == SDLK_LEFT)
-        //     this->cursor--;
-        // else if(event.key.keysym.sym == SDLK_RIGHT)
-        // this->cursor--;
+        else if(event.key.keysym.sym == SDLK_LEFT && this->cursor != this->message.begin())
+        {
+            std::cerr << *(this->cursor) << "\n";
+            *(this->cursor) = *(this->cursor -1);
+            this->cursor = this->cursor -1;
+            *(this->cursor) = '|';
+        }
+        else if(event.key.keysym.sym == SDLK_RIGHT && this->cursor != this->message.end())
+        {
+            *(this->cursor) = *(this->cursor +1);
+            this->cursor++;
+            *(this->cursor) = '|';
+        }
 
     }
 

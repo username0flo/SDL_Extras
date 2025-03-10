@@ -10,40 +10,35 @@ SDL_E::Button::Button(const Button& button)
     *this = button;
 }
 
-SDL_E::Button::Button(Text text): text(text)
+SDL_E::Button::Button(TTF_Font* font, SDL_Renderer* renderer, std::string message, int x, int y)
 {
-    SDL_E::Button::_UpdateRect();
-}
-
-
-SDL_E::Button::Button(TTF_Font* font, SDL_Renderer* renderer, std::string message): text(font,renderer,message)
-{
-    SDL_E::Button::_UpdateRect();
-}
-
-
-SDL_E::Button::Button(TTF_Font* font, SDL_Renderer* renderer, std::string message, int x, int y): text(font,renderer,message)
-{
+    this->font = font;
+    this->renderer = renderer;
+    this->message = message;
+    this->Text::_LoadTexture();
     this->rect.x = x;
     this->rect.y = y;
     SDL_E::Button::_UpdateRect();
 }
-SDL_E::Button::Button(Text text, int x, int y): text(text)
+
+SDL_E::Button::Button(Text text, int x, int y) : Text(text)
 {
+    this->Text::_LoadTexture();
     this->rect.x = x;
     this->rect.y = y;
     SDL_E::Button::_UpdateRect();
 }
+
 SDL_E::Button::~Button()
 {
-    this->text.~Text();
+    this->Text::~Text();
 }
 
 
 void SDL_E::Button::_UpdateRect()
 {
-    SDL_Rect temp = this->text.Get_rect();
-    this->text.set_pos(this->rect.x + padx, this->rect.y + pady);
+    SDL_Rect temp = this->Text::Get_rect();
+    this->Text::set_pos(this->rect.x + padx, this->rect.y + pady);
     this->rect.w = temp.w + 2* padx;
     this->rect.h = temp.h + 2* pady;
 }
@@ -66,24 +61,17 @@ void SDL_E::Button::set_pos(int x, int y)
 
 void SDL_E::Button::Draw()
 {
-    SDL_Renderer* rend = this->text.Get_renderer();
-    if(this->is_click && (flag & BUTTON_ISCLICK_COLOR))
-        SDL_SetRenderDrawColor(rend,(this->bg_color.r + 50)%256, (this->bg_color.g + 50)%256, (this->bg_color.b + 50)%256, this->bg_color.a);
+    if(this->is_click && (this->flags & BUTTON_ISCLICK_COLOR))
+        SDL_SetRenderDrawColor(this->renderer,(this->bg_color.r + 50)%256, (this->bg_color.g + 50)%256, (this->bg_color.b + 50)%256, this->bg_color.a);
     else
-        SDL_SetRenderDrawColor(rend,this->bg_color.r, this->bg_color.g, this->bg_color.b, this->bg_color.a);
-    SDL_RenderFillRect(rend,&(this->rect));
-    this->text.Draw();
-}
-
-
-std::string SDL_E::Button::Get_message()
-{
-    return this->text.Get_message();
+        SDL_SetRenderDrawColor(this->renderer,this->bg_color.r, this->bg_color.g, this->bg_color.b, this->bg_color.a);
+    SDL_RenderFillRect(this->renderer,&(this->rect));
+    this->Text::Draw();
 }
 
 SDL_Color SDL_E::Button::Get_txt_color()
 {
-    return this->text.Get_color();
+    return this->text_color;
 }
 
 SDL_Color SDL_E::Button::Get_bg_color()
@@ -98,12 +86,22 @@ SDL_Rect SDL_E::Button::Get_rect()
 
 void SDL_E::Button::set_txt_color(SDL_Color color)
 {
-    this->text.set_color(color);
+    this->Text::set_color(color);
 }
 
 void SDL_E::Button::set_txt_color(int r, int g, int b, int a)
 {
-    this->text.set_color(r,g,b,a);
+    this->Text::set_color(r,g,b,a);
+}
+
+void SDL_E::Button::set_txt_bg_color(SDL_Color color)
+{
+    this->Text::set_color(color);
+}
+
+void SDL_E::Button::set_txt_bg_color(int r, int g, int b, int a)
+{
+    this->Text::set_color(r,g,b,a);
 }
 
 void SDL_E::Button::set_bg_color(SDL_Color color)
@@ -119,24 +117,14 @@ void SDL_E::Button::set_bg_color(int r, int g, int b, int a)
     this->bg_color.a = a;
 }
 
-void SDL_E::Button::change_font(TTF_Font* new_font)
-{
-    this->text.change_font(new_font);
-}
-
-void SDL_E::Button::set_message(std::string message)
-{
-    this->text.set_message(message);
-}
-
 void SDL_E::Button::add_flag(int flag)
 {
-    this->flag |= flag;
+    this->Text::add_flag(flag);
 }
 
 void SDL_E::Button::remove_flag(int flag)
 {
-    this->flag &= ~flag;
+    this->Text::remove_flag(flag);
 }
 
 void SDL_E::buttons_clicked(SDL_Event event, std::vector<Button> buttons)
@@ -215,17 +203,11 @@ void SDL_E::draw_buttons(Button* buttons, int nb_buttons)
 
 void SDL_E::Button::operator=(const Button& other)
 {
+    this->Text::operator=(other);
     this->bg_color = other.bg_color;
-    this->flag = other.flag;
     this->rect = other.rect;
     this->padx = other.padx;
     this->pady = other.pady;
-    this->text = other.text;
-}
-
-int SDL_E::Button::Get_flags()
-{
-    return this->flag;
 }
 
 SDL_Point SDL_E::Button::Get_pad()
