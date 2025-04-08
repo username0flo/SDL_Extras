@@ -1,4 +1,3 @@
-$ git status
 tests/tst.cpp
 documentation.md
 .vscode

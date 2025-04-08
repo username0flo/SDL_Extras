@@ -82,8 +82,32 @@ int main(int argc, char** argv)
     pg_bar.set_size(150,20);
     pg_bar.set_value(80.0);
 
-    
 
+    // int h;
+    // double s;
+    // double l;
+    // SDL_Color c;
+
+    // h = 20;
+    // s = 0.4;
+    // l = 0.6;
+    // std::cout << h << " " << s << " " << l << std::endl;
+    // c = SDL_E::HSL_to_RGB(h,s,l);
+    // std::cout << (int)c.r <<" " << (int)c.g <<" " << (int)c.b << std::endl;
+
+    // h = 360;
+    // s = 0.6;
+    // l = 0.2;
+    // std::cout << h << " " << s << " " << l << std::endl;
+    // c = SDL_E::HSL_to_RGB(h,s,l);
+    // std::cout << (int)c.r <<" " << (int)c.g <<" " << (int)c.b << std::endl;
+
+    // h = 120;
+    // s = 0.0;
+    // l = 0.1;
+    // std::cout << h << " " << s << " " << l << std::endl;
+    // c = SDL_E::HSL_to_RGB(h,s,l);
+    // std::cout << (int)c.r <<" " << (int)c.g <<" " << (int)c.b << std::endl;
 
     while(run)
     {
