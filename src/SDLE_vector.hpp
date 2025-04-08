@@ -81,6 +81,23 @@ namespace SDL_E
              * change the vector's y coordinate to its opposite value, is like an axial symetry by the x axis
              */
             void FlipY();
+
+            /**
+             * \return the magnitude (i.e. length) of the vector
+             */
+            double get_magnitude();
+
+            /**
+             * \return the dot product (i.e. scalar product) between the 2 vectors
+             */
+            int Dot(Vector other);
+
+            /**
+             * \return the angle between the 2 vectors
+             * \warning the angle is returned in radians
+             */
+            double get_angle(Vector other);
+
         private:
             int x;
             int y;

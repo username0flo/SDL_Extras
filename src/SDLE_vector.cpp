@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <cmath>
 #include "SDLE_vector.hpp"
 #include "SDL_Extras.hpp"
 #include <iostream>
@@ -113,3 +114,19 @@ void SDL_E::Vector::AddY(int num)
 {
     this-> y += num;
 }
+
+double SDL_E::Vector::get_magnitude()
+{
+    return sqrt(x*x + y*y);
+}
+
+int SDL_E::Vector::Dot(Vector other)
+{
+    return this->x * other.x + this->y * other.y;
+}
+
+double SDL_E::Vector::get_angle(Vector other)
+{
+    return this->Dot(other) / (this->get_magnitude() * other.get_magnitude());
+}
+
