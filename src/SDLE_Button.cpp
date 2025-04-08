@@ -16,16 +16,16 @@ SDL_E::Button::Button(TTF_Font* font, SDL_Renderer* renderer, std::string messag
     this->renderer = renderer;
     this->message = message;
     this->Text::_LoadTexture();
-    this->rect.x = x;
-    this->rect.y = y;
+    this->bg_rect.x = x;
+    this->bg_rect.y = y;
     SDL_E::Button::_UpdateRect();
 }
 
 SDL_E::Button::Button(Text text, int x, int y) : Text(text)
 {
     this->Text::_LoadTexture();
-    this->rect.x = x;
-    this->rect.y = y;
+    this->bg_rect.x = x;
+    this->bg_rect.y = y;
     SDL_E::Button::_UpdateRect();
 }
 
@@ -38,9 +38,9 @@ SDL_E::Button::~Button()
 void SDL_E::Button::_UpdateRect()
 {
     SDL_Rect temp = this->Text::Get_rect();
-    this->Text::set_pos(this->rect.x + padx, this->rect.y + pady);
-    this->rect.w = temp.w + 2* padx;
-    this->rect.h = temp.h + 2* pady;
+    this->Text::set_pos(this->bg_rect.x + padx, this->bg_rect.y + pady);
+    this->bg_rect.w = temp.w + 2* padx;
+    this->bg_rect.h = temp.h + 2* pady;
 }
 
 
@@ -54,18 +54,18 @@ void SDL_E::Button::set_pad(int padx, int pady)
 
 void SDL_E::Button::set_pos(int x, int y)
 {
-    this->rect.x = x;
-    this->rect.y = y;
+    this->bg_rect.x = x;
+    this->bg_rect.y = y;
     this->_UpdateRect();
 }
 
 void SDL_E::Button::Draw()
 {
-    if(this->is_click && (this->flags & BUTTON_ISCLICK_COLOR))
+    if(this->is_click && ((this->flags & BUTTON_COLOR_MODE) == BUTTON_ISCLICK_COLOR))
         SDL_SetRenderDrawColor(this->renderer,(this->bg_color.r + 50)%256, (this->bg_color.g + 50)%256, (this->bg_color.b + 50)%256, this->bg_color.a);
     else
         SDL_SetRenderDrawColor(this->renderer,this->bg_color.r, this->bg_color.g, this->bg_color.b, this->bg_color.a);
-    SDL_RenderFillRect(this->renderer,&(this->rect));
+    SDL_RenderFillRect(this->renderer,&(this->bg_rect));
     this->Text::Draw();
 }
 
@@ -81,7 +81,7 @@ SDL_Color SDL_E::Button::Get_bg_color()
 
 SDL_Rect SDL_E::Button::Get_rect()
 {
-    return this->rect;
+    return this->bg_rect;
 }
 
 void SDL_E::Button::set_txt_color(SDL_Color color)
@@ -205,7 +205,7 @@ void SDL_E::Button::operator=(const Button& other)
 {
     this->Text::operator=(other);
     this->bg_color = other.bg_color;
-    this->rect = other.rect;
+    this->bg_rect = other.bg_rect;
     this->padx = other.padx;
     this->pady = other.pady;
 }

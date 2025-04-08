@@ -8,6 +8,7 @@
 
 #define BUTTON_ISCLICK_COLOR 0x00000000
 #define BUTTON_ISCLICK_NO_COLOR 0x00000002
+#define BUTTON_COLOR_MODE 0x00000002
 
 
 namespace SDL_E
@@ -136,7 +137,7 @@ namespace SDL_E
 
             void _UpdateRect();
         private:
-            SDL_Rect rect = {0,0,0,0};
+            SDL_Rect bg_rect = {0,0,0,0};
             SDL_Color bg_color = {255,0,0,255};
             int padx = 5;
             int pady = 5;

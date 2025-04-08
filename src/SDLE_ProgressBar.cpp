@@ -75,7 +75,7 @@ SDL_Point SDL_E::ProgressBar::get_size()
 void SDL_E::ProgressBar::Draw(SDL_Renderer* renderer)
 {
     SDL_SetRenderDrawColor(renderer, this->color.r, this->color.g, this->color.b, this->color.a);
-    int prog_width = (int)(this->value - ((float)this->start) / (float)(this->end - this->start));
+    int prog_width = (int)(((this->value - (double)this->start) / (double)(this->end - this->start)) * (double)this->rect.w);
     SDL_Rect prog_rect = {this->rect.x, this->rect.y, prog_width, this->rect.h};
     SDL_RenderFillRect(renderer, &prog_rect);
 
