@@ -40,6 +40,7 @@ table of contents:
 - [Shapes](#shapes)
 - [collisions](#collisions)
 - [drawings](#drawings)
+- [color](#color)
 
 ### Vector
 Vector is a simple class representing a mathematic vector defined with two coordinates x and y (with int coordinates)
@@ -198,3 +199,8 @@ SDL_Extras add these drawings:
 > [!NOTE]
 > all these added drawings can be drawn filled or non filled
 
+### color
+this is a set of function for color use and conversion
+this include:
+    - conversion between hexadecimal and RGB notation
+    - conversion from HSL to RGB

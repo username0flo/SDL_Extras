@@ -9,6 +9,7 @@
 #include "SDLE_Button.hpp"
 #include "SDLE_ScrollBar.hpp"
 #include "SDLE_ProgressBar.hpp"
+#include "SDLE_Color.hpp"
 
 namespace SDL_E
 {
