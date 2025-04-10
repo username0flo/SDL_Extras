@@ -187,7 +187,7 @@ void SDL_E::Text::operator=(const Text& other)
 SDL_E::TextZone::TextZone()
 {
     this->message = "|";
-    this->cursor = this->message.begin();
+    this->index = 0;
     this->_LoadTexture();
 }
 
@@ -196,8 +196,7 @@ SDL_E::TextZone::TextZone(TTF_Font* font, SDL_Renderer* renderer, std::string me
     this->font = font;
     this->renderer = renderer;
     this->message = message + '|';
-    this->cursor = this->message.end();
-    std::cerr << "cursor : " << *(this->cursor) << " cursor -1: "<< *(this->cursor -1) << "\n";
+    this->index = this->message.length() -1;
     this->_LoadTexture();
 }
 
@@ -206,7 +205,7 @@ SDL_E::TextZone::TextZone(TTF_Font* font, SDL_Renderer* renderer , std::string m
     this->font = font;
     this->renderer = renderer;
     this->message = message + '|';
-    this->cursor = this->message.end();
+    this->index = this->message.length() -1;
     this->zone_rect.x = x;
     this->zone_rect.y = y;
     this->_LoadTexture();
@@ -268,21 +267,32 @@ void SDL_E::TextZone::add_typed_chars(SDL_Event event)
     
         else if(event.key.keysym.sym == SDLK_BACKSPACE)
         {
-            if(this->message.size() >= 1)
+            if(this->message.size() >= 2 && index > 0)
+            {
+                this->message[index-1] = '|';
+                for(int i = index; i < this->message.size() -1; i++)
+                {
+                    this->message[i] = this->message[i+1];
+                }
                 this->message.pop_back();
+                index --;
+            }
         }
-        else if(event.key.keysym.sym == SDLK_LEFT && this->cursor != this->message.begin())
+        else if(event.key.keysym.sym == SDLK_LEFT && index != 0)
         {
-            std::cerr << *(this->cursor) << "\n";
-            *(this->cursor) = *(this->cursor -1);
-            this->cursor = this->cursor -1;
-            *(this->cursor) = '|';
+            char temp = this->message[index];
+            this->message[index] = this->message[index-1];
+            this->message[index-1] = temp;
+            index --;
+
+
         }
-        else if(event.key.keysym.sym == SDLK_RIGHT && this->cursor != this->message.end())
+        else if(event.key.keysym.sym == SDLK_RIGHT && index != this->message.length()-1)
         {
-            *(this->cursor) = *(this->cursor +1);
-            this->cursor++;
-            *(this->cursor) = '|';
+            char temp = this->message[index];
+            this->message[index] = this->message[index+1];
+            this->message[index+1] = temp;
+            index ++;
         }
 
     }
@@ -291,7 +301,18 @@ void SDL_E::TextZone::add_typed_chars(SDL_Event event)
     for(const char car : txt)
     {
         if(isprint(car))
-            this->message += car;
+        {
+            char prev = car;
+            for(int i = index; i < this->message.length(); i++)
+            {
+                char temp = this->message[i];
+                this->message[i] = prev;
+                prev = temp;
+
+            }
+            this->message += prev;
+            index ++;
+        }
     }
     this->_LoadTexture();
 

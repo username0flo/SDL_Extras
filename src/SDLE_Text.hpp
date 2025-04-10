@@ -173,7 +173,8 @@ namespace SDL_E
             void Draw();
         private:
             SDL_Rect zone_rect = {0,0,0,0};
-            std::string::iterator cursor;
+            // std::string::iterator cursor;
+            int index = 0;
     };
 }
 

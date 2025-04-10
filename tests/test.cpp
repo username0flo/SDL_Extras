@@ -55,10 +55,10 @@ int main(int argc, char** argv)
     SDL_Color transparent = {0,0,0,0};
     SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
 
-    // SDL_E::TextZone txt_zne{font,renderer,"bonjour, je fais des test random"};
-    // txt_zne.change_zone_size(200,400);
-    // txt_zne.add_flag(TEXT_LCD);
-    // txt_zne.set_bg_color(transparent);
+    SDL_E::TextZone txt_zne{font,renderer,"bonjour, je fais des test random"};
+    txt_zne.change_zone_size(200,400);
+    txt_zne.add_flag(TEXT_LCD);
+    txt_zne.set_bg_color(transparent);
     
 
     SDL_E::ScrollBar bar{};
@@ -75,12 +75,12 @@ int main(int argc, char** argv)
 
     SDL_Rect rct = {200,80,200,200};
 
-    SDL_E::ProgressBar pg_bar{};
-    pg_bar.set_pos(10,10);
-    pg_bar.set_end(100);
-    pg_bar.set_start(0);
-    pg_bar.set_size(150,20);
-    pg_bar.set_value(80.0);
+    // SDL_E::ProgressBar pg_bar{};
+    // pg_bar.set_pos(10,10);
+    // pg_bar.set_end(100);
+    // pg_bar.set_start(0);
+    // pg_bar.set_size(150,20);
+    // pg_bar.set_value(80.0);
 
 
     // int h;
@@ -120,11 +120,11 @@ int main(int argc, char** argv)
                 run = false;
                 break;
             }
-            // txt_zne.add_typed_chars(event);
+            txt_zne.add_typed_chars(event);
             bar.Update(event);
             // SDL_E::buttons_clicked(event,buttons);
         }
-        pg_bar.set_value((float)((int)(SDL_GetTicks()/100)%100));
+        // pg_bar.set_value((float)((int)(SDL_GetTicks()/100)%100));
         if(last_val != bar.get_value().f_value)
         {
             last_val = bar.get_value().f_value;
@@ -148,8 +148,8 @@ int main(int argc, char** argv)
         // SDL_E::draw_buttons(buttons);
         SDL_SetRenderDrawColor(renderer,0,200,140,255);
         SDL_RenderFillRect(renderer,&rct);
-        // txt_zne.Draw();
-        pg_bar.Draw(renderer);
+        txt_zne.Draw();
+        // pg_bar.Draw(renderer);
         txt_val.Draw();
         bar.Draw(renderer);
         
