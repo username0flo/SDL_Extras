@@ -10,6 +10,11 @@ SDL_E::Vector::Vector(int x, int y)
     this->y = y;
 }
 
+void SDL_E::Vector::operator=(const Vector& other)
+{
+    this->x = other.x;
+    this->y = other.y;
+}
 
 std::ostream& SDL_E::operator<<(std::ostream& os, const SDL_E::Vector& vect)
 {
@@ -63,6 +68,21 @@ SDL_E::Vector SDL_E::Vector::operator*(const int& num)
 {
     return Vector{this->x *num, this->y *num};
 } 
+
+SDL_E::Vector SDL_E::operator+(const int& num, Vector& vect)
+{
+    return vect + num;
+}
+
+SDL_E::Vector SDL_E::operator-(const int& num, Vector& vect)
+{
+    return vect - num ; 
+}
+
+SDL_E::Vector SDL_E::operator*(const int& num, Vector& vect)
+{
+    return vect * num;
+}
 
 void SDL_E::Vector::operator*=(const int& num)
 {
@@ -130,3 +150,41 @@ double SDL_E::Vector::get_angle(Vector other)
     return this->Dot(other) / (this->get_magnitude() * other.get_magnitude());
 }
 
+
+
+/*------------------------------------------------------------
+Vectorf
+------------------------------------------------------------*/
+
+
+SDL_E::Vectorf::Vectorf(double x, double y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+void SDL_E::Vectorf::set_pos(double x, double y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+void SDL_E::Vectorf::setX(double x)
+{
+    this->x = x;
+}
+
+void SDL_E::Vectorf::setY(double y)
+{
+    this->y = y;
+}
+
+double SDL_E::Vectorf::GetX()
+{
+    return this->x;
+}
+
+double SDL_E::Vectorf::GetY()
+{
+    return this->y;
+}

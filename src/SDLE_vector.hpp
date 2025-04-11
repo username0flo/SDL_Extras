@@ -19,6 +19,9 @@ namespace SDL_E
              * \param y the y coordinates
              */
             Vector(int x, int y);
+
+            void operator=(const Vector& other);
+
             Vector operator+(Vector& other);
             Vector operator+(const int& num);
             void operator+=(const int& num);
@@ -104,6 +107,37 @@ namespace SDL_E
         friend std::ostream& operator<<(std::ostream& os, const Vector& vect);
     };
     std::ostream& operator<<(std::ostream& os, const Vector& vect);
+
+    Vector operator+(const int& num, Vector& vect);
+
+    Vector operator-(const int& num, Vector& vect);
+
+    Vector operator*(const int& num, Vector& vect);
+
+
+
+    class Vectorf
+    {
+        public:
+            Vectorf() = default;
+
+            Vectorf(double x, double y);
+
+            void set_pos(double x, double y);
+
+            void setX(double x);
+
+            void setY(double y);
+
+            double GetX();
+
+            double GetY();
+
+
+        private:
+            double x;
+            double y;
+    };
 }
 
 #endif
