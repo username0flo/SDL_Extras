@@ -278,6 +278,17 @@ void SDL_E::TextZone::add_typed_chars(SDL_Event event)
                 index --;
             }
         }
+        else if(event.key.keysym.sym == SDLK_DELETE)
+        {
+            if(this->message.size() >= 2 && index < this->message.size() -1)
+            {
+                for(int i = index+1; i < this->message.size() -1; i++)
+                {
+                    this->message[i] = this->message[i+1];
+                }
+                this->message.pop_back();
+            }
+        }
         else if(event.key.keysym.sym == SDLK_LEFT && index != 0)
         {
             char temp = this->message[index];
