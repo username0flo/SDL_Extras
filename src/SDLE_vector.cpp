@@ -163,6 +163,12 @@ SDL_E::Vectorf::Vectorf(double x, double y)
     this->y = y;
 }
 
+SDL_E::Vectorf::Vectorf(const Vectorf& other)
+{
+    this->x = other.x;
+    this->y = other.y;
+}
+
 void SDL_E::Vectorf::set_pos(double x, double y)
 {
     this->x = x;
@@ -187,4 +193,132 @@ double SDL_E::Vectorf::GetX()
 double SDL_E::Vectorf::GetY()
 {
     return this->y;
+}
+
+void SDL_E::Vectorf::Flip()
+{
+    (*this) *= -1.0;
+}
+
+void SDL_E::Vectorf::FlipX()
+{
+    this->x *= -1;
+}
+
+void SDL_E::Vectorf::FlipY()
+{
+    this->y *= -1;
+}
+
+void SDL_E::Vectorf::AddX(double num)
+{
+    this-> x += num;
+}
+
+void SDL_E::Vectorf::AddY(double num)
+{
+    this-> y += num;
+}
+
+double SDL_E::Vectorf::get_magnitude()
+{
+    return sqrt(x*x + y*y);
+}
+
+double SDL_E::Vectorf::Dot(Vectorf other)
+{
+    return this->x * other.x + this->y * other.y;
+}
+
+double SDL_E::Vectorf::get_angle(Vectorf other)
+{
+    return this->Dot(other) / (this->get_magnitude() * other.get_magnitude());
+}
+
+void SDL_E::Vectorf::normalize()
+{
+    double magintude = this->get_magnitude();
+    this->x /= magintude;
+    this->y /= magintude;
+}
+
+void SDL_E::Vectorf::operator=(const Vectorf& other)
+{
+    this->x = other.x;
+    this->y = other.y;
+}
+
+SDL_E::Vectorf SDL_E::Vectorf::operator+(Vectorf& other)
+{
+    return Vectorf(this->x + other.x, this->y + other.y);
+}
+
+SDL_E::Vectorf SDL_E::Vectorf::operator+(const int& num)
+{
+    return Vectorf(this->x + num, this->y + num);
+}
+
+void SDL_E::Vectorf::operator+=(const int& num)
+{
+    this->x += num;
+    this->y += num;
+}
+
+SDL_E::Vectorf SDL_E::Vectorf::operator-(Vectorf& other)
+{
+    return Vectorf(this->x - other.x, this->y - other.y);
+}
+
+SDL_E::Vectorf SDL_E::Vectorf::operator-(const int& num)
+{
+    return Vectorf(this->x - num, this->y - num);
+}
+
+void SDL_E::Vectorf::operator-=(const int& num)
+{
+    this->x -= num;
+    this->y -= num;
+}
+
+SDL_E::Vectorf SDL_E::Vectorf::operator*(const int& num)
+{
+    return Vectorf(this->x * num, this->y *num);
+}
+
+void SDL_E::Vectorf::operator*=(const int& num)
+{
+    this->x *= num;
+    this->y *= num;
+}
+
+bool SDL_E::Vectorf::operator==(Vectorf& other)
+{
+    return (this->x - other.x == 0.0 && this->y - other.y == 0.0);
+}
+
+bool SDL_E::Vectorf::operator!=(Vectorf& other)
+{
+    return !((*this) == other);
+}
+
+
+std::ostream& SDL_E::operator<<(std::ostream& os, const Vectorf& vect)
+{
+    os << "x: "<< vect.x << " y: " << vect.y;
+    return os;
+}
+
+SDL_E::Vectorf SDL_E::operator+(const int& num, Vectorf& vect)
+{
+    return vect + num;
+}
+
+SDL_E::Vectorf SDL_E::operator-(const int& num, Vectorf& vect)
+{
+    return vect - num;
+}
+
+SDL_E::Vectorf SDL_E::operator*(const int& num, Vectorf& vect)
+{
+    return vect * num;
 }

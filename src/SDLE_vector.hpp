@@ -123,21 +123,114 @@ namespace SDL_E
 
             Vectorf(double x, double y);
 
+            Vectorf(const Vectorf& other);
+
+            void operator=(const Vectorf& other);
+
+            Vectorf operator+(Vectorf& other);
+            Vectorf operator+(const int& num);
+            void operator+=(const int& num);
+
+            Vectorf operator-(Vectorf& other);
+            Vectorf operator-(const int& num);
+            void operator-=(const int& num);
+
+            Vectorf operator*(const int& num);
+            void operator*=(const int& num);
+
+            bool operator==(Vectorf& other);
+            bool operator!=(Vectorf& other);
+
+            /**
+             * set a new x,y coordinates to the vector
+             * \param x the x coordinate
+             * \param y the y cooordinate
+             */
             void set_pos(double x, double y);
 
+            /**
+             * set a new x coordinate to the vector
+             * \param x the x coordinate
+             */
             void setX(double x);
 
+            /**
+             * set a new y coordinate to the vector
+             * \param y the y cooordinate
+             */
             void setY(double y);
 
+            /**
+             * \return the x coordinate of the vector
+             */
             double GetX();
 
+            /**
+             * \return the y coordinate of the vector
+             */
             double GetY();
+
+            /**
+             * add a value to the x coordinate
+             * \param num the value with will be added to x coordinate
+             */
+            void AddX(double num);
+
+            /**
+             * add a value to the y coordinate
+             * \param num the value with will be added to y coordinate
+             */
+            void AddY(double num);
+
+            /**
+             * transform the vector into its opposite, it's equivalent to vector *= -1
+             */
+            void Flip();
+
+            /**
+             * change the vector's x coordinate to its opposite value, is like an axial symetry by the y axis
+             */
+            void FlipX();
+
+            /**
+             * change the vector's y coordinate to its opposite value, is like an axial symetry by the x axis
+             */
+            void FlipY();
+
+            /**
+             * \return the magnitude (i.e. length) of the vector
+             */
+            double get_magnitude();
+
+            /**
+             * \return the dot product (i.e. scalar product) between the 2 vectors
+             */
+            double Dot(Vectorf other);
+
+            /**
+             * \return the angle between the 2 vectors
+             * \warning the angle is returned in radians
+             */
+            double get_angle(Vectorf other);
+
+            /**
+             * set the magnitude (i.e. length) of the vector to 1
+             */
+            void normalize();
 
 
         private:
             double x;
             double y;
+        friend std::ostream& operator<<(std::ostream& os, const Vectorf& vect);
     };
+    std::ostream& operator<<(std::ostream& os, const Vectorf& vect);
+
+    Vectorf operator+(const int& num, Vectorf& vect);
+
+    Vectorf operator-(const int& num, Vectorf& vect);
+
+    Vectorf operator*(const int& num, Vectorf& vect);
 }
 
 #endif

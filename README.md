@@ -49,7 +49,7 @@ a lot of operators are overloading:
 - `+`
 - `+=` (only with int)
 - `-`
-- `-=`
+- `-=` (only with int)
 - `*` (only with int)
 - `*=` (only with int)
 - `==`
@@ -58,6 +58,10 @@ a lot of operators are overloading:
 
 > [!NOTE]
 > there is also a function named move() that take can take class like buttons, text, etc... an move these by a vector
+
+> [!NOTE]
+> there is also a Vectorf class thas is the same as the Vector with double type x and y
+
 
 ### Text
 a Text class that use the SDL_TTF package to render text : [see here](https://github.com/libsdl-org/SDL_ttf)
