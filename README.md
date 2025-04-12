@@ -206,5 +206,5 @@ SDL_Extras add these drawings:
 ### color
 this is a set of function for color use and conversion
 this include:
-    - conversion between hexadecimal and RGB notation
-    - conversion from HSL to RGB
+- conversion between hexadecimal and RGB notation
+- conversion from HSL to RGB
