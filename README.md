@@ -47,9 +47,9 @@ Vector is a simple class representing a mathematic vector defined with two coord
 
 a lot of operators are overloading:
 - `+`
-- `+=` (only with int)
+- `+=`
 - `-`
-- `-=` (only with int)
+- `-=`
 - `*` (only with int)
 - `*=` (only with int)
 - `==`

@@ -32,10 +32,10 @@ SDL_E::Vector SDL_E::Vector::operator+(const int& num)
     return Vector{this->x + num, this->y + num};
 } 
 
-void SDL_E::Vector::operator+=(const int& num)
+void SDL_E::Vector::operator+=(Vector& other)
 {
-    this->x += num;
-    this->y += num;
+    this->x += other.x;
+    this->y += other.y;
 }
 
 
@@ -49,9 +49,10 @@ SDL_E::Vector SDL_E::Vector::operator-(const int& num)
     return *this + (-num);
 } 
 
-void SDL_E::Vector::operator-=(const int& num)
+void SDL_E::Vector::operator-=(Vector& other)
 {
-    *this += -num;
+    this->x -= other.x;
+    this->y -= other.y;
 }
 
 bool SDL_E::Vector::operator==(SDL_E::Vector& other)
@@ -258,10 +259,10 @@ SDL_E::Vectorf SDL_E::Vectorf::operator+(const int& num)
     return Vectorf(this->x + num, this->y + num);
 }
 
-void SDL_E::Vectorf::operator+=(const int& num)
+void SDL_E::Vectorf::operator+=(Vectorf& other)
 {
-    this->x += num;
-    this->y += num;
+    this->x += other.x;
+    this->y += other.y;
 }
 
 SDL_E::Vectorf SDL_E::Vectorf::operator-(Vectorf& other)
@@ -274,10 +275,10 @@ SDL_E::Vectorf SDL_E::Vectorf::operator-(const int& num)
     return Vectorf(this->x - num, this->y - num);
 }
 
-void SDL_E::Vectorf::operator-=(const int& num)
+void SDL_E::Vectorf::operator-=(Vectorf& other)
 {
-    this->x -= num;
-    this->y -= num;
+    this->x -= other.x;
+    this->y -= other.y;
 }
 
 SDL_E::Vectorf SDL_E::Vectorf::operator*(const int& num)

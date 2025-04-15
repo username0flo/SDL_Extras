@@ -24,11 +24,11 @@ namespace SDL_E
 
             Vector operator+(Vector& other);
             Vector operator+(const int& num);
-            void operator+=(const int& num);
+            void operator+=(Vector& other);
 
             Vector operator-(Vector& other);
             Vector operator-(const int& num);
-            void operator-=(const int& num);
+            void operator-=(Vector& other);
 
             Vector operator*(const int& num);
             void operator*=(const int& num);
@@ -129,11 +129,11 @@ namespace SDL_E
 
             Vectorf operator+(Vectorf& other);
             Vectorf operator+(const int& num);
-            void operator+=(const int& num);
+            void operator+=(Vectorf& other);
 
             Vectorf operator-(Vectorf& other);
             Vectorf operator-(const int& num);
-            void operator-=(const int& num);
+            void operator-=(Vectorf& other);
 
             Vectorf operator*(const int& num);
             void operator*=(const int& num);
