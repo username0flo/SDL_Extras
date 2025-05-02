@@ -8,6 +8,16 @@
 
 namespace SDL_E
 {
+
+    struct HSL
+    {
+        int h;
+        double s;
+        double l_v;
+    };
+
+    using HSV = HSL;
+
     /**
      * convert a HSL entry to RGB
      * \param hue the angle for the hue (between 0 and 360)
@@ -25,6 +35,26 @@ namespace SDL_E
      * \return a rgb value equivalent to HSV
      */
     SDL_Color HSV_to_RGB(int hue, double saturation, double value);
+
+    /**
+     * convert a RGB entry to HSL
+     * \param r the amount of red
+     * \param g the amount of green
+     * \param b the amount of blue
+     * \return a HSL value equivalent to RGB
+     * \warning this fuction return a SDL_E struct name HSL and have fields `h`(int),`s`(double),and `l_v`(double) (same struct for HSV)
+     */
+    HSL RGB_to_HSL(int r, int g, int b);
+
+    /**
+     * convert a RGB entry to HSV
+     * \param r the amount of red
+     * \param g the amount of green
+     * \param b the amount of blue
+     * \return a HSV value equivalent to RGB
+     * \warning this fuction return a SDL_E struct name HSV and have fields `h`(int),`s`(double),and `l_v`(double) (same struct for HSL)
+     */
+    HSV RGB_to_HSV(int r, int g, int b);
 
     /**
      * convert a hexadacimal notation string to RBG
@@ -52,6 +82,5 @@ namespace SDL_E
      */
     std::string RGB_to_hex(int r, int g, int b, int a);
 }
-
 
 #endif

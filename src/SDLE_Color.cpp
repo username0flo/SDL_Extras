@@ -6,67 +6,191 @@
 #include "SDL_Extras.hpp"
 #include "SDLE_Color.hpp"
 
-
 SDL_Color SDL_E::HSL_to_RGB(int hue, double saturation, double lightness)
 {
-    if(saturation == 0.0)
+    double chroma = (1 - fabs(2.0*lightness -1)) * saturation;
+
+    double H = hue / 60.0;
+    double X = chroma * (1 - fabs(fmod(H, 2.0) -1));
+
+    double r = 0.0;
+    double g = 0.0;
+    double b = 0.0;
+    if(H >= 0.0 && H < 1.0)
     {
-        Uint8 greyscale = (Uint8)(lightness * 255.0);
-        SDL_Color rgb_color = {greyscale,greyscale,greyscale,255};
-        return rgb_color;
+        r = chroma;
+        g = X;
     }
-    double temp1;
-    if(lightness < 0.5)
-        temp1 = lightness * (1.0 + saturation);
+    else if(H < 2.0)
+    {
+        r = X;
+        g = chroma;
+    }
+    else if(H < 3.0)
+    {
+        g = chroma;
+        b = X;
+    }
+    else if(H < 4.0)
+    {
+        g = X;
+        b = chroma;
+    }
+    else if(H < 5.0)
+    {
+        r = X;
+        b = chroma;
+    }
+    else if(H < 6.0)
+    {
+        r = chroma;
+        b = X;
+    }
+
+    double m = lightness - (chroma /2.0);
+
+    SDL_Color color = {(Uint8)(round(255.0* (r+m))),(Uint8)(round(255.0* (g+m))),(Uint8)(round(255.0* (b+m))),255};
+    return color;
+}
+
+SDL_Color SDL_E::HSV_to_RGB(int hue, double saturation, double value)
+{
+    double chroma = saturation * value;
+    double H = hue / 60.0;
+    double X = chroma * (1 - fabs(fmod(H, 2.0) -1));
+
+    double r = 0.0;
+    double g = 0.0;
+    double b = 0.0;
+    if(H >= 0.0 && H < 1.0)
+    {
+        r = chroma;
+        g = X;
+    }
+    else if(H < 2.0)
+    {
+        r = X;
+        g = chroma;
+    }
+    else if(H < 3.0)
+    {
+        g = chroma;
+        b = X;
+    }
+    else if(H < 4.0)
+    {
+        g = X;
+        b = chroma;
+    }
+    else if(H < 5.0)
+    {
+        r = X;
+        b = chroma;
+    }
+    else if(H < 6.0)
+    {
+        r = chroma;
+        b = X;
+    }
+
+    double m = value - chroma;
+    SDL_Color color = {(Uint8)(round(255.0* (r+m))),(Uint8)(round(255.0* (g+m))),(Uint8)(round(255.0* (b+m))),255};
+    return color;
+
+}
+
+SDL_E::HSL SDL_E::RGB_to_HSL(int r, int g, int b)
+{
+    int max =  std::max(std::max(r,g),b);
+
+
+    double red = (double)(r)/255.0;
+    double green = (double)(g)/255.0;
+    double blue = (double)(b)/255.0;
+
+    double x_max = std::max(std::max(red,green),blue);
+    double x_min = std::min(std::min(red,green),blue);
+
+    double chroma = x_max - x_min;
+
+    double L = (x_max + x_min) /2.0;
+
+    int hue;
+    if(chroma == 0.0)
+        hue = 0;
+    
+    else if(max == r)
+    {
+        hue = (int)round(60.0 * fmod((green - blue)/chroma,6));
+    }
+    else if(max == g)
+    {
+        hue = (int)round(60.0 * (((blue - red)/chroma) +2));
+    }
     else
-        temp1 = lightness + saturation - lightness * saturation;
+    {
+        hue = (int)round(60.0 * (((red - green)/chroma) +4));
+    }
     
-    double temp2 = 2.0 * lightness - temp1;
 
-    double h = (double)(hue) / 360.0;
+    double saturation;
 
-    double tempr = h + 0.333; // 0.333 ~= 1/3 (but we don't need a lot of precision)
-    if(tempr > 1.0)
-        tempr -= 1.0;
-    
-    double tempg = h;
-
-    double tempb = h - 0.333;
-    if(tempb < 0.0)
-        tempb += 1.0;
-    
-    double r,g,b;
-
-    if(6 * tempr < 1)
-        r = temp2 + (temp1 - temp2)* 6 * tempr;
-    else if(2 * tempr < 1)
-        r = temp1;
-    else if(3* tempr < 2)
-        r = temp2 + (temp1 - temp2) * (0.6666 - tempr)* 6;
+    if(L == 0.0 || L == 1.0)
+    {
+        saturation = 0.0;
+    }
     else
-        r = temp2;
-    
-    if(6 * tempg < 1)
-        g = temp2 + (temp1 - temp2)* 6 * tempg;
-    else if(2 * tempg < 1)
-        g = temp1;
-    else if(3* tempg < 2)
-        g = temp2 + (temp1 - temp2) * (0.6666 - tempg)* 6;
-    else
-        g = temp2;
-    
-    if(6 * tempb < 1)
-        b = temp2 + (temp1 - temp2)* 6 * tempb;
-    else if(2 * tempb < 1)
-        b = temp1;
-    else if(3* tempb < 2)
-        b = temp2 + (temp1 - temp2) * (0.6666 - tempb)* 6;
-    else
-        b = temp2;
+    {
+        saturation = (2.0 * (x_max - L)) / (1.0 - fabs(2.0*L -1));
+    }
+    HSL color = {hue,saturation,L};
+    return color;
+}
 
-    SDL_Color rgb_color = {(Uint8)round(r * 255.0),(Uint8)round(g * 255.0),(Uint8)round(b * 255.0),255};
+SDL_E::HSV SDL_E::RGB_to_HSV(int r, int g, int b)
+{
+    int max =  std::max(std::max(r,g),b);
 
-    return rgb_color;
+
+    double red = (double)(r)/255.0;
+    double green = (double)(g)/255.0;
+    double blue = (double)(b)/255.0;
+
+    double value = std::max(std::max(red,green),blue);
+    double x_min = std::min(std::min(red,green),blue);
+
+    double chroma = value - x_min;
+
+    int hue;
+    if(chroma == 0.0)
+        hue = 0;
+    
+    else if(max == r)
+    {
+        hue = (int)round(60.0 * fmod((green - blue)/chroma,6));
+    }
+    else if(max == g)
+    {
+        hue = (int)round(60.0 * (((blue - red)/chroma) +2));
+    }
+    else
+    {
+        hue = (int)round(60.0 * (((red - green)/chroma) +4));
+    }
+    
+
+    double saturation;
+
+    if(value == 0.0)
+    {
+        saturation = 0.0;
+    }
+    else
+    {
+        saturation = chroma / value;
+    }
+    HSV color = {hue,saturation,value};
+    return color;
 }
 
 SDL_Color SDL_E::hex_to_RGB(std::string hex_color)
