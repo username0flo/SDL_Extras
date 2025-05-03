@@ -126,13 +126,12 @@ namespace SDL_E
              */
             bool clicked();
 
-            // Do not work
-            // /**
-            //  * get the state of the button (if is just_clicked (during 1 frame) or not)
-            //  * you have to call buttons_clicked function to update the state of the button
-            //  * you can also chage manualy this state with the method: change_click_state
-            //  */
-            // bool just_clicked();
+            /**
+            * get the state of the button (if is just_clicked (during 1 frame) or not)
+            * you have to call buttons_clicked function to update the state of the button
+            * \warning this method work only if you called it at each frame after an event update and only once per frame
+            */
+            bool just_clicked();
             
 
             void _UpdateRect();
@@ -141,8 +140,7 @@ namespace SDL_E
             SDL_Color bg_color = {255,0,0,255};
             int padx = 5;
             int pady = 5;
-            bool is_click = false;
-            // bool is_just_click = false; // can't use (same as click)
+            Uint8 is_click = 0;
     };
     /**
      * a simple event gestionnary that check if buttons are clicked

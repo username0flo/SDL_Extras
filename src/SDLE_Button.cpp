@@ -177,13 +177,30 @@ void SDL_E::buttons_clicked(SDL_Event event, Button* buttons, int nb_buttons)
 
 void SDL_E::Button::change_click_state(bool state)
 {
-    this->is_click = state;
+    this->is_click &= 0xff << 1;
+    this->is_click |= state &1;
 }
 
 bool SDL_E::Button::clicked()
 {
-    return this->is_click;
+    return this->is_click &1;
 }
+
+bool SDL_E::Button::just_clicked()
+{
+    if(this->is_click &1)
+    {
+        if(this->is_click &2)
+        {
+            this->is_click &= (0xff<<2) |1; // this mask: 11111101
+            return false;
+        }
+        this->is_click |= 2;
+        return true;
+    }
+    return false;
+}
+
 
 void SDL_E::draw_buttons(std::vector<Button> buttons)
 {
