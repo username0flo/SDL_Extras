@@ -151,6 +151,30 @@ void SDL_E::buttons_clicked(SDL_Event event, std::vector<Button> buttons)
     }
 }
 
+void SDL_E::buttons_clicked(SDL_Event event, std::vector<Button*> buttons)
+{
+    if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
+    {
+        int x = event.button.x;
+        int y = event.button.y;
+        for(Button* button : buttons)
+        {
+            if(SDL_E::point_rect_collision(x,y,button->Get_rect()))
+            {
+                button->change_click_state(true);
+                break;
+            }
+        }
+    }
+    else if(event.type == SDL_MOUSEBUTTONUP)
+    {
+        for(Button* button : buttons)
+        {
+            button->change_click_state(false);
+        }
+    }
+}
+
 void SDL_E::buttons_clicked(SDL_Event event, Button* buttons, int nb_buttons)
 {
     if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
@@ -207,6 +231,14 @@ void SDL_E::draw_buttons(std::vector<Button> buttons)
     for(Button& button : buttons)
     {
         button.Draw();
+    }
+}
+
+void SDL_E::draw_buttons(std::vector<Button*> buttons)
+{
+    for(Button* button : buttons)
+    {
+        button->Draw();
     }
 }
 

@@ -2,7 +2,7 @@
 #define __SDLE_TEXT__
 
 /**
- * to use this package tou must have installed the sdl_ttf package
+ * to use this package you must have installed the sdl_ttf package
  * you can download it here: https://github.com/libsdl-org/SDL_ttf
  */
 
@@ -110,7 +110,7 @@ namespace SDL_E
 
             /**
              * change the font used to render the text
-             * /!\ the text class just use the font but you have to open and free it outside of the class
+             * \warning the text class just use the font but you have to open and free it outside of the class
              * \param new_font the new font used to render the text
              */
             void change_font(TTF_Font* new_font);

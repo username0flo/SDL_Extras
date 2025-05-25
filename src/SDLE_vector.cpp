@@ -148,7 +148,7 @@ int SDL_E::Vector::Dot(Vector other)
 
 double SDL_E::Vector::get_angle(Vector other)
 {
-    return this->Dot(other) / (this->get_magnitude() * other.get_magnitude());
+    return acos((double)this->Dot(other) / (this->get_magnitude() * other.get_magnitude()));
 }
 
 
@@ -233,7 +233,7 @@ double SDL_E::Vectorf::Dot(Vectorf other)
 
 double SDL_E::Vectorf::get_angle(Vectorf other)
 {
-    return this->Dot(other) / (this->get_magnitude() * other.get_magnitude());
+    return acos(this->Dot(other) / (this->get_magnitude() * other.get_magnitude()));
 }
 
 void SDL_E::Vectorf::normalize()

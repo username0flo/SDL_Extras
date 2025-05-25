@@ -16,7 +16,6 @@ namespace SDL_E
     class Button : public Text
     {
         public:
-            using Text::Text;
             Button() = default;
             Button(const Button& button);
             Button(TTF_Font* font, SDL_Renderer* renderer, std::string message, int x, int y);
@@ -142,6 +141,15 @@ namespace SDL_E
             int pady = 5;
             Uint8 is_click = 0;
     };
+
+    /**
+     * a simple event gestionnary that check if buttons are clicked
+     * this function have to be placed in the defalut event gestionnary (with SDL_Poll_Event)
+     * \param event the actual event
+     * \param buttons a std::vector containing buttons
+     */
+    void buttons_clicked(SDL_Event event, std::vector<Button*> buttons);
+
     /**
      * a simple event gestionnary that check if buttons are clicked
      * this function have to be placed in the defalut event gestionnary (with SDL_Poll_Event)
@@ -164,6 +172,12 @@ namespace SDL_E
      * \param button a std::vector containing buttons
      */
     void draw_buttons(std::vector<Button> buttons);
+
+    /**
+     * draw all the button in the vector buttons are drawed in the order of the buttons 
+     * \param button a std::vector containing buttons
+     */
+    void draw_buttons(std::vector<Button*> buttons);
 
     /**
      * draw all the button in the vector buttons are drawed in the order of the buttons  

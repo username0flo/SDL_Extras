@@ -14,7 +14,7 @@
 namespace SDL_E
 {
 
-    void explanation();
+    void title();
 
     /**
      * compute the distance between 2 points

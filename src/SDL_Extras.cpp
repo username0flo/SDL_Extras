@@ -8,11 +8,10 @@
 #include <SDL.h>
 #include <cmath>
 
-void SDL_E::explanation()
+void SDL_E::title()
 {
     //(v) logo: SDL EXTRAS
     std::cout << "  _____ _____  _         ________   _________ _____             _____ \n / ____|  __ \\| |       |  ____\\ \\ / /__   __|  __ \\     /\\    / ____|\n| (___ | |  | | |       | |__   \\ V /   | |  | |__) |   /  \\  | (___  \n \\___ \\| |  | | |       |  __|   > <    | |  |  _  /   / /\\ \\  \\___ \\ \n ____) | |__| | |____   | |____ / . \\   | |  | | \\ \\  / ____ \\ ____) |\n|_____/|_____/|______|  |______/_/ \\_\\  |_|  |_|  \\_\\/_/    \\_\\_____/ " << std::endl;
-    std::cout << "here are quick explanation of what is SDL_Extras, this function was created also to fill the SDL_E.hpp file with other things than includes\nso SDL_Extras is a extras librairy based on SDL graphic library\nthis library was created to add features to SDL like:\n\tVectors (in math not std::vectors)\n\tbuttons\n\ttext (using SDL_TTF package)\n\ttext zone (wich is a user modifable text)" << std::endl;
 }
 
 double SDL_E::distance(SDL_Point p1,SDL_Point p2)

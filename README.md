@@ -106,10 +106,10 @@ on bottom: LCD rendering
 a class that inherit from Text class that is define with a rectangle: the zone that the user can fill with text
 important methods:
 - `Draw()` render the text (not render the zone rectangle)
-- `add_typed_chars()` a methos you should put in your envent gestionnary and whan the user type whars, there will be added in the text zone
+- `add_typed_chars()` a methos you should put in your envent gestionnary and whan the user type chars, there will be added in the text zone
 
-> [!CAUTION]
-> the typed text is add to the end of the precedent text and there is no cursor to move and modify text somwhere else than the end.
+exemple of Text Zone:
+![txt zone example](ex_img/ex_textzne.gif)
 
 > [!NOTE]
 > non ascii chars are not added to the text zone 
@@ -152,6 +152,9 @@ you can change mode with the method: `change_mode()`
 there also 2 importants methods witch are:
     - `Draw()` : draw the scroll bar
     - `Update()` : update the state of the scroll bar, put this method in your event gestionnary
+
+example of scroll bar in float mode:
+![ex scroll bar 2](ex_img/ex_scroll_bar2.gif)
 
 > [!NOTE]
 > with int mode when you click in the scroll bar it is set to the nearest value
@@ -208,3 +211,8 @@ this is a set of function for color use and conversion
 this include:
 - conversion between hexadecimal and RGB notation
 - conversion from HSL to RGB
+- conversion from HSV to RGB
+- conversion from RGB to HSL
+- conversion from RGB to HSV
+
+there is also a `HSL` and `HSV` struct there are the same and are returned in RGB to HSL / HSV conversion there is 3 fields: hue: `h` (an int 0,360), saturation: `s` (a double 0,1) and lightness or value (depending of the type): `l_v` (a double 0,1)

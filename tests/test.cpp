@@ -1,4 +1,5 @@
 #include "../src/SDL_Extras.hpp"
+#include <cassert>
 #include <iostream>
 #include <SDL.h>
 #include <array>
@@ -11,9 +12,7 @@
 
 
 int main(int argc, char** argv)
-{
-    int i = 0;
-    
+{  
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
 
@@ -27,87 +26,13 @@ int main(int argc, char** argv)
     {
         std::cout << "erreur creation renderer" << std::endl;
     }
-    TTF_Font* font = TTF_OpenFont("tests/MTCORSVA.ttf",20);
-    
+    TTF_Font* font = TTF_OpenFont("tests/arial.ttf",16);
 
-    // SDL_E::Button bouton1{font,renderer,"test1", 10, 10};
-    // SDL_E::Button bouton2{font,renderer,"test2", 150, 10};
-    // SDL_E::Button bouton3{font,renderer,"test3", 10, 150};
-    // SDL_E::Button bouton4{font,renderer,"test4", 300, 300};
-    // std::vector<SDL_E::Button> buttons{bouton1,bouton2};
-    // buttons.push_back({font,renderer,"test1", 10, 10});
-    // buttons.push_back({font,renderer,"test2", 150, 10});
-    // buttons.push_back({font,renderer,"test3", 10, 150});
-    // buttons.push_back({font,renderer,"test4", 300, 300});
-    // SDL_E::Button buttons[4] = {bouton1,bouton2,bouton3,bouton4};
-
-
-    SDL_E::explanation();
+    SDL_E::title();
 
     bool run{true};
 
-    // SDL_Point p1 = {10,10};
-    // SDL_Point p2 = {140,20};
-    // SDL_Point p3 = {90,340};
-
-    // SDL_Point points[5] = {{89,30},{0,0},{128,33},{393,73},{89,223}};
-    // SDL_E::Shape shape = {points,5};
-    SDL_Color transparent = {0,0,0,0};
-    SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
-
-    SDL_E::TextZone txt_zne{font,renderer,"bonjour, je fais des test random"};
-    txt_zne.change_zone_size(200,400);
-    txt_zne.add_flag(TEXT_LCD);
-    txt_zne.set_bg_color(transparent);
-    
-
-    SDL_E::ScrollBar bar{};
-    bar.change_mode(SCROLL_FLOAT_MODE);
-    bar.set_pos(150,50);
-    bar.set_size(400,20);
-    bar.set_value((float)100.0);
-    bar.set_start(0);
-    bar.set_end(100);
-    float last_val = bar.get_value().f_value;
-    SDL_E::Text txt_val{font,renderer,std::to_string(last_val)};
-    txt_val.set_pos(200,10);
-    std::cout << "mode : " << bar.get_mode() << std::endl;
-
-    SDL_Rect rct = {200,80,200,200};
-
-    // SDL_E::ProgressBar pg_bar{};
-    // pg_bar.set_pos(10,10);
-    // pg_bar.set_end(100);
-    // pg_bar.set_start(0);
-    // pg_bar.set_size(150,20);
-    // pg_bar.set_value(80.0);
-
-
-    // int h;
-    // double s;
-    // double l;
-    // SDL_Color c;
-
-    // h = 20;
-    // s = 0.4;
-    // l = 0.6;
-    // std::cout << h << " " << s << " " << l << std::endl;
-    // c = SDL_E::HSL_to_RGB(h,s,l);
-    // std::cout << (int)c.r <<" " << (int)c.g <<" " << (int)c.b << std::endl;
-
-    // h = 360;
-    // s = 0.6;
-    // l = 0.2;
-    // std::cout << h << " " << s << " " << l << std::endl;
-    // c = SDL_E::HSL_to_RGB(h,s,l);
-    // std::cout << (int)c.r <<" " << (int)c.g <<" " << (int)c.b << std::endl;
-
-    // h = 120;
-    // s = 0.0;
-    // l = 0.1;
-    // std::cout << h << " " << s << " " << l << std::endl;
-    // c = SDL_E::HSL_to_RGB(h,s,l);
-    // std::cout << (int)c.r <<" " << (int)c.g <<" " << (int)c.b << std::endl;
+    // all tests:
 
     while(run)
     {
@@ -120,41 +45,15 @@ int main(int argc, char** argv)
                 run = false;
                 break;
             }
-            txt_zne.add_typed_chars(event);
-            bar.Update(event);
-            // SDL_E::buttons_clicked(event,buttons);
+         
         }
-        // pg_bar.set_value((float)((int)(SDL_GetTicks()/100)%100));
-        if(last_val != bar.get_value().f_value)
-        {
-            last_val = bar.get_value().f_value;
-            txt_val.set_message(std::to_string(last_val));
-            rct.w = 200 * (bar.get_value().f_value / 100.0);
-            rct.h = 200 * (bar.get_value().f_value / 100.0);
 
-        }
-        // for(int i = 0;i < 4; i++)
-        // {
-        //     if(buttons[i].clicked())
-        //         std::cout << "buttons clicked : " << buttons[i].Get_message() << std::endl;
-        // }
         SDL_SetRenderDrawColor(renderer,0,0,0,255);
         SDL_RenderClear(renderer);
-
-        // SDL_SetRenderDrawColor(renderer,255,0,0,255);
-        // SDL_E::RenderFillTriangle(renderer,p1,p2,p3);
-        // SDL_SetRenderDrawColor(renderer,0,100,255,255);
-        // SDL_E::RenderFillShape(renderer,shape);
-        // SDL_E::draw_buttons(buttons);
-        SDL_SetRenderDrawColor(renderer,0,200,140,255);
-        SDL_RenderFillRect(renderer,&rct);
-        txt_zne.Draw();
-        // pg_bar.Draw(renderer);
-        txt_val.Draw();
-        bar.Draw(renderer);
         
         SDL_RenderPresent(renderer);
     }
+    TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     TTF_Quit();
